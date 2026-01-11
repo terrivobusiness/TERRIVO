@@ -1,0 +1,233 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 20% 98%;
+    --foreground: 215 35% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 215 35% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 35% 15%;
+
+    --primary: 213 55% 25%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 15% 95%;
+    --secondary-foreground: 215 35% 15%;
+
+    --muted: 210 15% 92%;
+    --muted-foreground: 215 15% 45%;
+
+    --accent: 213 55% 30%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 210 20% 88%;
+    --input: 210 20% 88%;
+    --ring: 213 55% 25%;
+
+    --radius: 0.75rem;
+
+    /* Custom brand colors */
+    --royal-blue: 213 55% 25%;
+    --royal-blue-light: 213 45% 35%;
+    --royal-blue-dark: 213 60% 18%;
+    --trust-grey: 210 10% 60%;
+    --soft-grey: 210 15% 96%;
+
+    /* Amazon button colors */
+    --amazon-yellow: 45 100% 51%;
+    --amazon-orange: 33 100% 50%;
+    --amazon-dark: 0 0% 10%;
+
+    /* Flipkart button colors */
+    --flipkart-blue: 210 100% 45%;
+    --flipkart-yellow: 45 100% 51%;
+
+    /* Myntra button colors */
+    --myntra-pink: 340 82% 52%;
+    --myntra-dark: 340 82% 45%;
+
+    /* JioMart button colors */
+    --jiomart-blue: 210 100% 50%;
+    --jiomart-red: 0 85% 55%;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 hsl(215 35% 15% / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(215 35% 15% / 0.1), 0 2px 4px -2px hsl(215 35% 15% / 0.1);
+    --shadow-lg: 0 10px 15px -3px hsl(215 35% 15% / 0.1), 0 4px 6px -4px hsl(215 35% 15% / 0.1);
+    --shadow-xl: 0 20px 25px -5px hsl(215 35% 15% / 0.1), 0 8px 10px -6px hsl(215 35% 15% / 0.1);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 215 35% 10%;
+    --foreground: 210 20% 98%;
+
+    --card: 215 35% 12%;
+    --card-foreground: 210 20% 98%;
+
+    --popover: 215 35% 12%;
+    --popover-foreground: 210 20% 98%;
+
+    --primary: 210 60% 70%;
+    --primary-foreground: 215 35% 10%;
+
+    --secondary: 215 30% 18%;
+    --secondary-foreground: 210 20% 98%;
+
+    --muted: 215 30% 20%;
+    --muted-foreground: 210 15% 65%;
+
+    --accent: 210 50% 60%;
+    --accent-foreground: 215 35% 10%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 215 30% 22%;
+    --input: 215 30% 22%;
+    --ring: 210 60% 70%;
+
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-outfit antialiased;
+  }
+}
+
+@layer components {
+  .container-brand {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-padding {
+    @apply py-16 md:py-24;
+  }
+
+  .heading-display {
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground;
+  }
+
+  .heading-section {
+    @apply text-3xl md:text-4xl font-bold tracking-tight text-foreground;
+  }
+
+  .text-lead {
+    @apply text-lg md:text-xl text-muted-foreground leading-relaxed;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+  }
+
+  .btn-amazon {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold text-sm bg-gradient-to-b from-[hsl(var(--amazon-yellow))] to-[hsl(var(--amazon-orange))] text-[hsl(var(--amazon-dark))] hover:brightness-105 transition-all duration-200 shadow-md;
+  }
+
+  .btn-flipkart {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold text-sm bg-[hsl(var(--flipkart-blue))] text-white hover:brightness-110 transition-all duration-200 shadow-md;
+  }
+
+  .btn-myntra {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold text-sm bg-gradient-to-r from-[hsl(var(--myntra-pink))] to-[hsl(var(--myntra-dark))] text-white hover:brightness-110 transition-all duration-200 shadow-md;
+  }
+
+  .btn-jiomart {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold text-sm bg-[hsl(var(--jiomart-blue))] text-white border-2 border-[hsl(var(--jiomart-red))] hover:brightness-110 transition-all duration-200 shadow-md;
+  }
+
+  .form-input-brand {
+    @apply w-full px-4 py-3 rounded-lg border border-border bg-card text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all duration-200;
+  }
+
+  .form-label-brand {
+    @apply block text-sm font-medium text-foreground mb-2;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.4s ease-out forwards;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
