@@ -1,24 +1,33 @@
+// src/pages/BlogPost.tsx
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import { PortableText } from "@portabletext/react";
 import Layout from "@/components/Layout";
-import { fetchBloggerPosts } from "@/lib/blogFetcher";
-import type { BloggerPost } from "@/types/blog";
+import { client, urlFor } from "@/lib/sanityClient";
+import type { SanityPost } from "@/types/blog";
 
 const BlogPost = () => {
-    const { postId } = useParams<{ postId: string }>();
-    const [post, setPost] = useState<BloggerPost | null>(null);
+    const { slug } = useParams<{ slug: string }>();
+    const [post, setPost] = useState<SanityPost | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        const blogId = '2830692751435612787';
+        const query = `*[_type == "post" && slug.current == $slug][0] {
+            _id,
+            title,
+            slug,
+            mainImage,
+            body,
+            publishedAt,
+            "authorName": author
+        }`;
 
-        fetchBloggerPosts(blogId, 50) // Fetch more posts to find the one we need
-            .then(posts => {
-                const foundPost = posts.find(p => p.id === postId);
-                if (foundPost) {
-                    setPost(foundPost);
+        client.fetch(query, { slug })
+            .then(fetchedPost => {
+                if (fetchedPost) {
+                    setPost(fetchedPost);
                 } else {
                     setError('Post not found');
                 }
@@ -28,7 +37,7 @@ const BlogPost = () => {
                 setError(err.message || "Failed to load post");
             })
             .finally(() => setLoading(false));
-    }, [postId]);
+    }, [slug]);
 
     if (loading) {
         return (
@@ -65,7 +74,7 @@ const BlogPost = () => {
         <>
             <Helmet>
                 <title>{post.title} - Terrivo Blog</title>
-                <meta name="description" content={post.content.substring(0, 160).replace(/<[^>]*>/g, '')} />
+                <meta name="description" content={post.title} />
             </Helmet>
 
             <Layout>
@@ -79,22 +88,31 @@ const BlogPost = () => {
                                 ← Back to Blog
                             </Link>
 
+                            {post.mainImage && (
+                                <div className="mb-8 rounded-2xl overflow-hidden shadow-lg aspect-video">
+                                    <img
+                                        src={urlFor(post.mainImage).width(1200).url()}
+                                        alt={post.title}
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+                            )}
+
                             <h1 className="heading-display mt-4 mb-4">{post.title}</h1>
 
                             <div className="flex items-center gap-4 text-muted-foreground mb-8 pb-8 border-b border-border">
-                                <span>{post.author}</span>
+                                <span>{post.authorName || 'Terrivo Team'}</span>
                                 <span>•</span>
-                                <time>{new Date(post.published).toLocaleDateString('en-US', {
+                                <time>{new Date(post.publishedAt).toLocaleDateString('en-US', {
                                     year: 'numeric',
                                     month: 'long',
                                     day: 'numeric'
                                 })}</time>
                             </div>
 
-                            <div
-                                className="prose prose-lg max-w-none"
-                                dangerouslySetInnerHTML={{ __html: post.content }}
-                            />
+                            <div className="prose prose-lg max-w-none">
+                                <PortableText value={post.body} />
+                            </div>
 
                             <div className="mt-12 pt-8 border-t border-border">
                                 <Link

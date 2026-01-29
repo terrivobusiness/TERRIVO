@@ -1,8 +1,13 @@
 // src/types/blog.ts
-export interface BloggerPost {
-    id: string;
+export interface SanityPost {
+    _id: string;
     title: string;
-    content: string; // HTML string from Blogger
-    published: string; // ISO date string
-    author: string;
+    slug: {
+        current: string;
+    };
+    mainImage?: any;
+    body: any; // Portable Text
+    publishedAt: string;
+    authorName?: string;
+    excerpt?: string;
 }
